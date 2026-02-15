@@ -38,7 +38,7 @@ export const AuthProvider = ({children }:{children: React.ReactNode})=>{
                 setUser(data.user as IUser)
                 setIsLoggedIn(true)
             }
-            toast.success(data.message || 'user Register successfully')
+            toast.success(data.message  )
         } catch (error) {
             console.log(error)
         }
@@ -52,7 +52,7 @@ export const AuthProvider = ({children }:{children: React.ReactNode})=>{
                 setUser(data.user as IUser)
                 setIsLoggedIn(true)
             }
-            toast.success(data.message || 'user Login successfully')
+            toast.success(data.message  )
         } catch (error) {
             console.log(error)
         }
@@ -62,7 +62,7 @@ export const AuthProvider = ({children }:{children: React.ReactNode})=>{
             const {data} = await api.post('/api/auth/logout');
              setUser(null)
              setIsLoggedIn(false)
-            toast.success(data.message || 'user Logout successfully')
+            toast.success(data.message  )
         } catch (error) {
             console.log(error)
         }
@@ -74,7 +74,7 @@ export const AuthProvider = ({children }:{children: React.ReactNode})=>{
                 setUser(data.user as IUser)
                 setIsLoggedIn(true)
             }
-            toast.success(data.message || 'user Login successfully')
+            toast.success(data.message  )
         } catch (error) {
             console.log(error)
         }
@@ -95,5 +95,5 @@ export const AuthProvider = ({children }:{children: React.ReactNode})=>{
         </AuthContext.Provider>
     )
 }
-export const useAuth = ()=> useContext(AuthContext)
+export const userAuth = ()=> useContext(AuthContext)
 

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import SoftBackdrop from "../components/SoftBackdrop"
-import {  type IThumbnail } from "../assets/assets"
+import {   type IThumbnail } from "../assets/assets"
 import { Link, useNavigate } from "react-router-dom"
-import { ArrowUpRightSquareIcon, DownloadIcon, TrashIcon } from "lucide-react"
-import { useAuth } from "../context/AuthContext"
+import { ArrowUpRightSquareIcon, DownloadIcon, EyeIcon, LucideEyeOff, TrashIcon } from "lucide-react"
+// import { userAuth } from "../context/AuthContext"
 import api from "../config/api"
 import toast from "react-hot-toast"
+import { useUser } from "@clerk/clerk-react"
 
 const MyGeneration = () => {
 
@@ -14,11 +15,17 @@ const MyGeneration = () => {
     '1:1' : 'aspect-square',
     '9:16' : 'aspect-[9/16]',
   } 
-  const {isLoggedIn} = useAuth()
+    const {user} = useUser()
+
+  // const {isLoggedIn} = userAuth()
   const navigate = useNavigate() 
   const [thumbnails, SetThumbnails] = useState<IThumbnail[]>([])
   const [loading, setLoading] = useState(false)
 
+  // const fetchThumbnails = async () => {
+  //     SetThumbnails(dummyThumbnails as unknown as IThumbnail[])
+  //     setLoading(false)
+  // }
   const fetchThumbnails = async () => {
      try {
       setLoading(true)
@@ -26,7 +33,10 @@ const MyGeneration = () => {
       SetThumbnails(data?.thumbnails || [])
      } catch (error:any) {
       console.log(error)
-      toast.error(error?.response?.data?.message || error.message)
+      //for testing use
+      toast.error('your generation page  is empty please generate first')
+
+      // toast.error(error?.response?.data?.message || error.message)
      } finally{
       setLoading(false)
      }
@@ -50,8 +60,26 @@ const MyGeneration = () => {
       toast.error(error?.response?.data?.message || error.message)
     }
   }
+  const handleTogglePublish = async (id: string, current: boolean) => {
+  try {
+    const { data } = await api.put(`/api/user/thumbnails/${id}`, {
+      published: !current,
+    });
+
+    toast.success(data.published ? "Published to community" : "Removed from community");
+
+    SetThumbnails((prev) =>
+      prev.map((t) =>
+        t._id === id ? { ...t, published: data.published } : t
+      )
+    );
+  } catch (error: any) {
+    // toast.error(error?.response?.data?.message || error.message);
+  }
+};
+
   useEffect(()=>{
-    if(isLoggedIn){
+    if(user){
     fetchThumbnails()
     }
   },[])
@@ -147,9 +175,30 @@ const MyGeneration = () => {
                 <div 
                 onClick={(e)=>e.stopPropagation()}
                 className="absolute bottom-2 right-2 max-sm:flex sm:hidden group-hover:flex gap-1.5">
+                  <button
+  onClick={() => handleTogglePublish(thumb._id, thumb.published!)}
+  title={thumb.published ? "Published" : "Publish"}
+  className="group"
+>
+  {thumb.published ? (
+    <EyeIcon
+      className="size-6 bg-black/50 p-1 rounded 
+      hover:bg-green-600 transition-all"
+    />
+  ) : (
+    <LucideEyeOff
+      className="size-6 bg-black/50 p-1 rounded 
+      hover:bg-pink-600 transition-all"
+    />
+  )}
+</button>
+
+
                   <TrashIcon 
                 onClick={()=>handleDelete(thumb._id)}
                   className="size-6 bg-black/50 p-1 rounded hover:bg-pink-600 transition-all"/>
+                 
+                   
                   <DownloadIcon 
                 onClick={()=>handleDownload(thumb.image_url!)}
                   className="size-6 bg-black/50 p-1 rounded hover:bg-pink-600 transition-all"/>

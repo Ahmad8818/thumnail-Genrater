@@ -14,6 +14,7 @@ export interface IThumbnail extends Document {
     prompt_used?: string;
     user_prompt?: string;
     isGenerating?: boolean;
+    published?:boolean;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -32,6 +33,7 @@ const ThumbnailSchema = new mongoose.Schema<IThumbnail>(
     prompt_used:{type:String}, 
     user_prompt:{type:String },
     isGenerating:{type:Boolean, default:true},
+    published:{type:Boolean, default:false}
     }
 )
 const Thumbnail = mongoose.models.Thumbnail || mongoose.model<IThumbnail>('Thumbnail',ThumbnailSchema)

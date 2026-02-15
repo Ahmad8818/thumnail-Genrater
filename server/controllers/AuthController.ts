@@ -13,6 +13,7 @@ export const registerUser = async (req:Request, res:Response)=>{
             message:'User already exists'
         })
        }
+       
     //  Encrypt by password  
        const salt = await bcrypt.genSalt(10)
        const hashPassword = await bcrypt.hash(password, salt)

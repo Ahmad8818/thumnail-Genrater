@@ -34,7 +34,7 @@ export interface ThumbnailRequest {
 
 export interface IThumbnail {
     _id: string;
-    userId: string;
+    userId: string| IUser;
     title: string;
     description?: string;
     style: "Bold & Graphic" | "Tech/Futuristic" | "Minimalist" | "Photorealistic" | "Illustrated";
@@ -45,9 +45,12 @@ export interface IThumbnail {
     prompt_used?: string;
     user_prompt?: string;
     isGenerating?: boolean;
+    published?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+ 
 
 export interface IUser {
     name: string;
@@ -70,6 +73,7 @@ export const dummyThumbnails = [
         prompt_used: "add multiple smartwatches ",
         user_prompt: "add multiple smartwatches ",
         isGenerating: false,
+        author:'hello',
         createdAt: "2025-12-19T09:50:43.727Z",
         updatedAt: "2025-12-19T09:51:07.874Z",
         __v: 0,
@@ -226,7 +230,7 @@ export const yt_html = `
                         <a class="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-yt2"><i data-lucide="thumbs-up"></i> Liked videos</a>
                         <hr class="border-ytBorder" />
                         <p class="px-3 text-xs text-gray-400 uppercase">Subscriptions</p>
-                        <a target="_blank" href="https://www.youtube.com/@GreatStackDev?sub_confirmation=1" class="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-yt2"> <img src="https://greatstack.dev/favicon.ico" class="rounded-full size-7 italic" /> Linkdin(M.A) </a>
+                       
                         
                         <a class="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-yt2"> <img src="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2023.ico" class="rounded-full size-7" /> Netflix </a>
                         <a class="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-yt2"> <img src="https://images.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" class="rounded-full size-7" /> Google </a>

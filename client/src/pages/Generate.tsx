@@ -7,7 +7,7 @@ import AspectRatioSelector from '../components/AspectRatioSelector';
 import StyleSelector from '../components/StyleSelector';
 import ColorSchemeSelector from '../components/ColorSchemeSelector';
 import PreviewPannel from '../components/PreviewPannel';
-import { useAuth } from '../context/AuthContext';
+import { userAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import api from '../config/api';
 
@@ -17,7 +17,7 @@ const Generate: React.FC = () => {
   // const [selectedScheme, setSelectedScheme] = useState('Vibrant');
   const {pathname} = useLocation()
   const navigate = useNavigate()
-  const {isLoggedIn} = useAuth()
+  const {isLoggedIn} = userAuth()
   const {id} = useParams();
   const [title,setTitle] = useState('')
   const [additionalDatails,setAdditionalDatails] = useState('')
@@ -29,7 +29,8 @@ const Generate: React.FC = () => {
   const [styleDropdownOpen,SetStyleDropdownOpen ] = useState(false)
 
   const handleGenerate = async () => {
-    if(isLoggedIn) return toast.error('Please login to generate thumbnails')
+    try {
+      if(isLoggedIn) return toast.error('Please login to generate thumbnails')
       if(!title.trim()) return toast.error('Title is required')
         setLoading(true)
 
@@ -41,26 +42,26 @@ const Generate: React.FC = () => {
       color_scheme: colorSchemeId,
       text_overlay: true
     }
+    setLoading(true)
     const {data} = await api.post('/api/thumbnail/generate', api_payload);
     if(data.thumbnail){
       navigate('/generate/' + data.thumbnail._id)
       toast.success(data.message)
     }
+    } catch (error) {
+      console.log(error)
+      toast.error('API rate limit exceeded. Please try again shortly. ')
+
+    } finally{
+      setLoading(false)
+    }
+    
 
     
   }
 
 const fetchThumbnail = async () => {
-  // if(id){
-  //   const thumbnail : any = dummyThumbnails.find((thumbnail)=>thumbnail._id === id);
-  //   setThumbnail(thumbnail)
-  //   setAdditionalDatails(thumbnail?.user_prompt)
-  //   setTitle(thumbnail.title)
-  //   SetColorSchemeId(thumbnail.color_scheme)
-  //   SetAspectRatios(thumbnail.aspect_ratio)
-  //   setStyle(thumbnail.style)
-  //   setLoading(false)
-  // }
+   
    try {
     const {data} = await api.get(`/api/user/thumbnail/${id}`);
     setThumbnail(data?.thumbnail as IThumbnail);
@@ -159,7 +160,7 @@ useEffect(()=>{
             <label className="text-sm font-semibold">Model</label>
             <button className="w-full flex items-center justify-between bg-[#2a1f23] border border-white/10 rounded-xl px-4 py-3 text-sm">
               <span className="font-medium text-gray-300">Premium <span className="text-gray-500 ml-1 text-xs">(10 credits)</span></span>
-              <ChevronDown size={18} className="text-gray-500" />
+              {/* <ChevronDown size={18} className="text-gray-500" /> */}
             </button>
           </div>
 

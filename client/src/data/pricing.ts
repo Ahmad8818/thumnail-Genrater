@@ -1,18 +1,71 @@
 import type { IPricing } from "../types";
 
+// export const pricingData: IPricing[] = [
+//     {
+//         name: "Starter",
+//         price: 29,
+//         period: "500 credits",
+//         features: [
+//             "50 AI Thumbnails",
+//             "Best for starters",
+//             "Access to all AI models",
+//             "No watermark on downloads",
+//             "High-quality",
+//             "Commercial usage allowed",
+//             "Credits never expire",
+
+
+//         ],
+//         mostPopular: false
+//     },
+//     {
+//         name: "Pro",
+//         price: 79,
+//         period: "2400 credits",
+//         features: [
+//             "240 AI Thumbnails",
+//             "Best for intermediate",
+//             "Access to all AI models",
+//             "No watermark on downloads",
+//             "High-quality",
+//             "Commercial usage allowed",
+//             "Credits never expire"
+//         ],
+//         mostPopular: true
+//     },
+//     {
+//         name: "Ultra",
+//         price: 199,
+//         period: "8000 credits",
+//         features: [
+//             "800 AI Thumbnails",
+//             "Best for professionals",
+//             "Access to all AI models",
+//             "No watermark on downloads",
+//             "High-quality",
+//             "Commercial usage allowed",
+//             "Credits never expire",
+
+//         ],
+//         mostPopular: false
+//     }
+// ];
+
+
+
 export const pricingData: IPricing[] = [
     {
-        name: "Starter",
-        price: 29,
-        period: "500 credits",
+        name: "Free",
+        price: 0,
+        period: "20 Free Credits",
         features: [
-            "50 AI Thumbnails",
+            "5 AI Thumbnails",
             "Best for starters",
             "Access to all AI models",
             "No watermark on downloads",
             "High-quality",
             "Commercial usage allowed",
-            "Credits never expire",
+            'Email support',
 
 
         ],
@@ -20,31 +73,33 @@ export const pricingData: IPricing[] = [
     },
     {
         name: "Pro",
-        price: 79,
-        period: "2400 credits",
+        price: 15,
+        period: "Month",
         features: [
-            "240 AI Thumbnails",
+            "80 Monthly Credits",
+            "80 AI Thumbnails",
             "Best for intermediate",
             "Access to all AI models",
             "No watermark on downloads",
             "High-quality",
-            "Commercial usage allowed",
-            "Credits never expire"
+            "Video generation",
+            "Priority support",
         ],
         mostPopular: true
     },
     {
         name: "Ultra",
-        price: 199,
-        period: "8000 credits",
+        price: 35,
+        period: "month",
         features: [
-            "800 AI Thumbnails",
+            "240 Monthly Credit",
+            "250 AI Thumbnails",
             "Best for professionals",
             "Access to all AI models",
             "No watermark on downloads",
             "High-quality",
-            "Commercial usage allowed",
-            "Credits never expire",
+            "Fast generation speed",
+            "Chat + Email support",
 
         ],
         mostPopular: false
