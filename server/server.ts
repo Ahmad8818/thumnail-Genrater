@@ -37,6 +37,7 @@ app.use(cors({
     origin:[
         'http://localhost:5173',
         'http://localhost:5000',
+        'https://advizi.vercel.app'
         //add frontend url
     ],credentials:true
 }))
