@@ -17,7 +17,7 @@ import * as Sentry from "@sentry/node"
            email: data.email_addresses?.[0]?.email_address,
            name: `${data.first_name || ""} ${data.last_name || ""}`,
            image: data.image_url,
-          //  credits: 20,
+           credits: 20,
          });
         
          break;
@@ -50,7 +50,7 @@ import * as Sentry from "@sentry/node"
          ) {
            // 🎯 Credit mapping
            const creditsMap = {
-            free:20,
+            // free:20,
              pro: 80,
              premium: 240,
            } as const;
