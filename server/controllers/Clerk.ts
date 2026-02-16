@@ -50,7 +50,7 @@ import * as Sentry from "@sentry/node"
          ) {
            // 🎯 Credit mapping
            const creditsMap = {
-            // free:20,
+            free:20,
              pro: 80,
              premium: 240,
            } as const;
