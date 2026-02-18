@@ -90,7 +90,7 @@ const AdsGenerate: React.FC = () => {
        
      } catch (error:any) {
       // toast.error(error?.response?.data?.message || error.message)
-      toast.error('API rate limit exceeded. Please try again shortly.')
+      toast.error(' generation is temporarily unavailable due to API usage limits. Please try again shortly.')
      } finally {
       setIsGenerating(false)
      }

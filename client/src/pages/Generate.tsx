@@ -50,7 +50,7 @@ const Generate: React.FC = () => {
     }
     } catch (error) {
       console.log(error)
-      toast.error('API rate limit exceeded. Please try again shortly. ')
+      toast.error(' generation is temporarily unavailable due to API usage limits. Please try again shortly. ')
 
     } finally{
       setLoading(false)
