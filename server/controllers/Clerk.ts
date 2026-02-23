@@ -10,19 +10,18 @@ import * as Sentry from "@sentry/node"
  
      switch (type) {
  
-       // ✅ USER CREATED
+       //  USER CREATED
        case "user.created":{ 
          await ClerkUser.create({
            clerkId: data.id,
            email: data.email_addresses?.[0]?.email_address,
            name: `${data.first_name || ""} ${data.last_name || ""}`,
            image: data.image_url,
-          //  credits: 20,
          });
         
          break;
   }
-       // ✅ USER UPDATED
+       //  USER UPDATED
        case "user.updated":{
          await ClerkUser.findOneAndUpdate(
            { clerkId: data.id },
@@ -35,22 +34,21 @@ import * as Sentry from "@sentry/node"
          
          break;
   }
-       // ✅ USER DELETED
+       //  USER DELETED
        case "user.deleted":{ 
          await ClerkUser.findOneAndDelete({ clerkId: data.id });
         
          break;
   }
-       // 💳 BILLING / CREDITS
+       //  BILLING / CREDITS
        case "paymentAttempt.updated": {
          if (
            (data.charge_type === "recurring" ||
              data.charge_type === "checkout") &&
            data.status === "paid"
          ) {
-           // 🎯 Credit mapping
+           //  Credit mapping
            const creditsMap = {
-            // free:20,
              pro: 80,
              premium: 240,
            } as const;
@@ -65,17 +63,8 @@ import * as Sentry from "@sentry/node"
            }
            console.log(planSlug)
                    
-          //  const planSlug = data?.subscription_items?.[0]?.plan?.slug as
-          //    | keyof typeof creditsMap
-          //    | undefined;
- 
-          //  if (!clerkUserId || !planSlug || !(planSlug in creditsMap)) {
-          //    return res
-          //      .status(400)
-          //      .json({ message: "Invalid billing payload" });
-          //  }
- 
-           //🔄 Update credits atomically
+           
+           // Update credits atomically
            const updatedUser = await ClerkUser.findOneAndUpdate(
              { clerkId: clerkUserId },
              {
